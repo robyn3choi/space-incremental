@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Research : MonoBehaviour {
+public class FoundLife : MonoBehaviour {
 
     public GameObject options;
     int price = 25000;
@@ -17,14 +17,27 @@ public class Research : MonoBehaviour {
         options.SetActive(false);
     }
 
-    public void SelectResearchType(string type)
+    public void SelectOption(int choice)
     {
         CloseOptions();
         transform.SetParent(Upgrade.purchasedUpgradesParent, false);
         CoinManager.inst.SubtractCoins(price);
-        GameManager.inst.research = type;
+
+        if (choice == 1)
+        {
+            GameManager.inst.life = GameManager.Life.Alliance;
+        }
+        else if (choice == 2)
+        {
+            GameManager.inst.life = GameManager.Life.Slave;
+        }
+        else if (choice == 3)
+        {
+            GameManager.inst.life = GameManager.Life.Ignore;
+        }
+
         Building newBuilding = Instantiate(Building.buildingPrefab, Building.buildingParent).GetComponent<Building>();
-        newBuilding.type = 4;
+        newBuilding.index = 4;
         newBuilding.InitVariables();
         newBuilding.Unlock();
     }

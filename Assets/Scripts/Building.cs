@@ -8,7 +8,7 @@ public class Building : MonoBehaviour {
     public bool canAfford;
     public int price;
     public int basePrice;
-    public int type;
+    public int index;
     public int cps;
     public int numOwned;
     public bool locked = true;
@@ -32,12 +32,12 @@ public class Building : MonoBehaviour {
     static int[] buildingCpss = { 1, 3, 10, 50, 150, 500, 2000, 10000 };
     public Building nextBuilding;
     public static Transform buildingParent;
-    int lastNonResearchBuilding = 3;
+    int lastNeutralBuilding = 3;
 
     // Use this for initialization
     void Start () {
         InitVariables();
-        if (type == 1)
+        if (index == 1)
         {
             buildingParent = transform.parent;
             Unlock();
@@ -54,20 +54,20 @@ public class Building : MonoBehaviour {
         {
             upgradePrefab = _upgradePrefab;
         }
-        gameObject.name = "building" + type;
-        basePrice = buildingBasePrices[type - 1];
+        gameObject.name = "building" + index;
+        basePrice = buildingBasePrices[index - 1];
         price = basePrice;
-        cps = buildingCpss[type - 1];
+        cps = buildingCpss[index - 1];
         cpsText.text = "CPS: " + cps.ToString();
         priceText.text = "Price: " + price.ToString();
         button = GetComponent<Button>();
-        if (type > lastNonResearchBuilding) // research building
+        if (index > lastNeutralBuilding)
         {
-            typeText.text = "Building" + type.ToString() + GameManager.inst.research;
+            typeText.text = "Building" + index.ToString() + GameManager.inst.life.ToString();
         }
         else
         {
-            typeText.text = "Building" + type.ToString();
+            typeText.text = "Building" + index.ToString();
         }
     }
 	
@@ -87,7 +87,7 @@ public class Building : MonoBehaviour {
 
     public void Buy()
     {
-        print(type);
+        print(index);
         CoinManager.inst.SubtractCoins(price);
         CoinManager.inst.AddCps(cps);
         numOwned++;
@@ -99,12 +99,12 @@ public class Building : MonoBehaviour {
         if (upgradeMultiplier != 0) { UnlockUpgrade(upgradeMultiplier); }
         
         // if this is building3, don't unlock next building because it doesn't exist
-        // 25x of building3 unlocks research
-        if (type == lastNonResearchBuilding)
+        // 25x of building3 unlocks foundLife
+        if (index == lastNeutralBuilding)
         {
             if (numOwned == 25)
             {
-                GameManager.inst.UnlockResearch();
+                GameManager.inst.UnlockFoundLife();
             }
             return;
         }
@@ -116,7 +116,7 @@ public class Building : MonoBehaviour {
         locked = false;
         lockedText.SetActive(false);
         unlockedText.SetActive(true);
-        if (type != buildingBasePrices.Length && type != lastNonResearchBuilding)
+        if (index != buildingBasePrices.Length && index != lastNeutralBuilding)
         {
             RevealNextBuilding();
         }
@@ -133,7 +133,7 @@ public class Building : MonoBehaviour {
     {
         GameObject nextBuildingObject = Instantiate(buildingPrefab, buildingParent);
         nextBuilding = nextBuildingObject.GetComponent<Building>();
-        nextBuilding.type = type + 1;
+        nextBuilding.index = index + 1;
         nextBuilding.InitVariables();
         nextBuilding.Lock();
     }

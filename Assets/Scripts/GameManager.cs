@@ -5,10 +5,12 @@ using UnityEngine;
 public class GameManager : MonoBehaviour {
 
     public static GameManager inst = null;
-    public string research;
     public int specialization;
 
-    public GameObject researchContainer;
+    public GameObject foundLifeContainer;
+
+    public enum Life { Alliance, Slave, Ignore };
+    public Life life;
 
     //singleton
     void Awake()
@@ -23,8 +25,8 @@ public class GameManager : MonoBehaviour {
         }
     }
 
-    public void UnlockResearch()
+    public void UnlockFoundLife()
     {
-        Instantiate(researchContainer, Upgrade.newUpgradesParent);
+        Instantiate(foundLifeContainer, Upgrade.newUpgradesParent);
     }
 }

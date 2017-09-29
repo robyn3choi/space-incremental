@@ -22,13 +22,13 @@ public class UIManager : MonoBehaviour {
 
     public void OpenUpgrades()
     {
-        upgrades.transform.localPosition = new Vector3(0, 0, 0);
+        upgrades.transform.localPosition = new Vector3(0, upgrades.transform.localPosition.y, 0);
         OpenNewUpgrades();
     }
 
     public void CloseUpgrades()
     {
-        upgrades.transform.localPosition = new Vector3(999, 0, 0);
+        upgrades.transform.localPosition = new Vector3(999, upgrades.transform.localPosition.y, 0);
     }
 
     public void OpenNewUpgrades()

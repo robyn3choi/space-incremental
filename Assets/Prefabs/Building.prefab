@@ -270,7 +270,7 @@ MonoBehaviour:
   canAfford: 0
   price: 0
   basePrice: 0
-  type: 1
+  index: 1
   cps: 0
   numOwned: 0
   locked: 1
@@ -284,6 +284,7 @@ MonoBehaviour:
   _buildingPrefab: {fileID: 1004944299257000}
   _upgradePrefab: {fileID: 1342268006374562, guid: a69cbf24dbe93344583443be1da8a0b6,
     type: 2}
+  nextBuilding: {fileID: 0}
 --- !u!114 &114663259087730344
 MonoBehaviour:
   m_ObjectHideFlags: 1

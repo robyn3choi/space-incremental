@@ -31,7 +31,7 @@ public class Upgrade : MonoBehaviour {
         transform.SetParent(newUpgradesParent, false);
         button = GetComponent<Button>();
         print(building + "button");
-        description = multiplier + "X production for Building" + building.type;
+        description = multiplier + "X production for Building" + building.index;
         descriptionText.text = description;
         priceText.text = price.ToString();
     }
